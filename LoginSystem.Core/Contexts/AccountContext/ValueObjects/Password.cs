@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Security.Cryptography;
 
 namespace LoginSystem.Core.Contexts.AccountContext.ValueObjects
 {
@@ -31,6 +32,32 @@ namespace LoginSystem.Core.Contexts.AccountContext.ValueObjects
 
             return new string(res);
         }
+
+        private static string Hashing(
+            string password,
+            short saltSize = 16,
+            short keySize = 32,
+            int interations = 10000,
+            char splitChar = '.')
+        {
+            if (string.IsNullOrEmpty(password))
+                throw new Exception("O passwor não pode ser nulo ou vazio");
+
+            password += Configuration.Secrets.PasswordSaltKey;
+
+            using var algorithm = new Rfc2898DeriveBytes(
+                password,
+                saltSize,
+                interations,
+                HashAlgorithmName.SHA256);
+            var key = Convert.ToBase64String(algorithm.GetBytes(keySize));
+            var salt = Convert.ToBase64String(algorithm.Salt);
+
+            return $"{interations}{splitChar}{salt}{splitChar}{key}";
+        }
+
+
+
 
         
 
