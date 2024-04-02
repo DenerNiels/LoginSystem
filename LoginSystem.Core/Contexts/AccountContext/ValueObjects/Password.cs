@@ -56,11 +56,31 @@ namespace LoginSystem.Core.Contexts.AccountContext.ValueObjects
             return $"{interations}{splitChar}{salt}{splitChar}{key}";
         }
 
+        private static bool Verify(
+            string hash,
+            string password,
+            short keySize = 32,
+            int interations = 10000,
+            char splitChar = '.')
+        {
+            password += Configuration.Secrets.PasswordSaltKey;
+            var parts = hash.Split(splitChar, 3);
+            if (parts .Length != 3)
+                return false;
 
+            var hashInterations = Convert.ToInt32(parts[0]);
+            var salt = Convert.FromBase64String(parts[1]);
+            var key = Convert.FromBase64String(parts[2]);
+            if (hashInterations != interations)
+                return false;
 
-
-        
-
-
+            using var algorithm = new Rfc2898DeriveBytes(
+                password,
+                salt,
+                interations,
+                HashAlgorithmName.SHA256);
+            var KeyToCheck = algorithm.GetBytes(keySize);
+            return KeyToCheck.SequenceEqual(key);
+        }
     }
 }
