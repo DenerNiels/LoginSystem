@@ -9,7 +9,10 @@ namespace LoginSystem.Core.Contexts.AccountContext.ValueObjects
 {
     public class Verification : ValueObject
     {
-        public Verification() { }
+        public Verification() 
+        {
+        }
+
         public string Code { get; } = Guid.NewGuid().ToString("N")[0..6].ToUpper();
         public DateTime? ExpiresAt { get; private set; } = DateTime.UtcNow.AddMinutes(10);
         public DateTime? VerifiedAt { get; private set; } = null;

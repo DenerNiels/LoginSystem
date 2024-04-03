@@ -10,24 +10,21 @@ using System.Threading.Tasks;
 
 namespace LoginSystem.Core.Contexts.AccountContext.ValueObjects
 {
-    public class Email
+    public partial class Email : ValueObject
     {
-        public partial class Email : ValueObject
+        private const string Pattern = @"^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$";
+
+        public Email(string address)
         {
-            private const string Pattern = @"^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$";
-
-            public Email(string address)
-            {
-                if (string.IsNullOrEmpty(address))
-                    throw new Exception("E-mail inválido");
-                Address = address.Trim().ToLower();
-                if (address.Length < 10)
-                    throw new Exception("E-mail inválido");
-                if (!EmailRegex().IsMatch(address))
-                    throw new Exception("E-mail inválido");
-            }
-
+            if (string.IsNullOrEmpty(address))
+                throw new Exception("E-mail inválido");
+            Address = address.Trim().ToLower();
+            if (address.Length < 10)
+                throw new Exception("E-mail inválido");
+            if (!EmailRegex().IsMatch(address))
+                throw new Exception("E-mail inválido");
         }
+
         public string Address { get; }
         public string Hash => Address.Tobase64();
         public Verification Verification { get; private set; } = new();
@@ -39,10 +36,8 @@ namespace LoginSystem.Core.Contexts.AccountContext.ValueObjects
 
         public static implicit operator string(Email email)
             => email.ToString();
-
         public static implicit operator Email(string address)
             => new Email(address);
-
         public override string ToString()
             => Address;
 
