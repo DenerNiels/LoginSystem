@@ -1,6 +1,9 @@
 ﻿using LoginSystem.Core;
 using LoginSystem.Infra.Data;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace LoginSystem.Api.Extensions
 {
@@ -23,6 +26,26 @@ namespace LoginSystem.Api.Extensions
             builder.Services.AddDbContext<AppDbContext>(x => x.UseSqlServer(
                 Configuration.Database.ConnectionString,
                 b => b.MigrationsAssembly("LoginSystem.Api")));
+        }
+        public static void AddJwtAuthentication(this WebApplicationBuilder builder)
+        {
+            builder.Services
+            .AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(x =>
+            {
+                x.RequireHttpsMetadata = false;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration.Secrets.JwtPrivateKey)),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
+            builder.Services.AddAuthorization();
         }
     }
 }
