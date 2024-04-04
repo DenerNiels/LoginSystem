@@ -9,7 +9,7 @@ namespace LoginSystem.Core.Contexts.AccountContext.ValueObjects
 {
     public class Verification : ValueObject
     {
-        public Verification() 
+        public Verification()
         {
         }
 
@@ -18,7 +18,7 @@ namespace LoginSystem.Core.Contexts.AccountContext.ValueObjects
         public DateTime? VerifiedAt { get; private set; } = null;
         public bool IsActive => VerifiedAt != null && ExpiresAt == null;
 
-        public void Verify(string code) 
+        public void Verify(string code)
         {
             if (IsActive)
             {
@@ -34,7 +34,7 @@ namespace LoginSystem.Core.Contexts.AccountContext.ValueObjects
             }
 
             ExpiresAt = null;
-            VerifiedAt=DateTime.UtcNow;
+            VerifiedAt = DateTime.UtcNow;
         }
 
     }

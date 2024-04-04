@@ -25,8 +25,8 @@ namespace LoginSystem.Core.Contexts.AccountContext.ValueObjects
             Hash = Hashing(text);
         }
 
-        public string Hash {  get;} = string.Empty;
-        public string ResetCode {  get;} = Guid.NewGuid().ToString("N")[..8].ToUpper();
+        public string Hash { get; } = string.Empty;
+        public string ResetCode { get; } = Guid.NewGuid().ToString("N")[..8].ToUpper();
 
         private static string Generate(
             short length = 16,
@@ -77,7 +77,7 @@ namespace LoginSystem.Core.Contexts.AccountContext.ValueObjects
         {
             password += Configuration.Secrets.PasswordSaltKey;
             var parts = hash.Split(splitChar, 3);
-            if (parts .Length != 3)
+            if (parts.Length != 3)
                 return false;
 
             var hashInterations = Convert.ToInt32(parts[0]);
