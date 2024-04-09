@@ -1,4 +1,6 @@
-﻿using LoginSystem.Core.Contexts.AccountContext.UseCases.Create.Contracts;
+﻿using LoginSystem.Core.Contexts.AccountContext.Entities;
+using LoginSystem.Core.Contexts.AccountContext.UseCases.Create.Contracts;
+using LoginSystem.Core.Contexts.AccountContext.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,6 +39,20 @@ namespace LoginSystem.Core.Contexts.AccountContext.UseCases.Create
 
             #region 02. Gerar os objetos
 
+            Email email;
+            Password password;
+            User user;
+            
+            try
+            {
+                email = new Email(request.Email);
+                password = new Password(request.Password);
+                user = new User(request.Name, email, password);
+            }
+            catch (Exception ex)
+            {
+                return new Response(ex.Message, 400);
+            }
             #endregion
 
             #region 03. Verificar o usuário
