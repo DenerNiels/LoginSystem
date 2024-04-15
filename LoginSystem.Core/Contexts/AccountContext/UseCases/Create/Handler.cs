@@ -60,7 +60,7 @@ namespace LoginSystem.Core.Contexts.AccountContext.UseCases.Create
 
             try
             {
-                var exists = await _repository.AnyAsync(Request.Email, cancellationToken);
+                var exists = await _repository.AnyAsync(request.Email, cancellationToken);
                 if (exists)
                     return new Response("este e-mail já esta em uso", 400);
             }
@@ -72,7 +72,14 @@ namespace LoginSystem.Core.Contexts.AccountContext.UseCases.Create
             #endregion
 
             #region 04. Persistir os dados 
-
+            try
+            {
+                await _repository.SaveAsync(user, cancellationToken);
+            }
+            catch (Exception)
+            {
+                return new Response("Falha ao persistir dados", 500);
+            }
             #endregion
 
             #region 05. Enviar E-mail de ativação

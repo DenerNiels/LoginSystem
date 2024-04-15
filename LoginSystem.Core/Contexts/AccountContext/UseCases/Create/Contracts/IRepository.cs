@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LoginSystem.Core.Contexts.AccountContext.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,5 +10,6 @@ namespace LoginSystem.Core.Contexts.AccountContext.UseCases.Create.Contracts
     internal interface IRepository
     {
         Task<bool> AnyAsync(string email, CancellationToken cancellationToken );
+        Task SaveAsync(User user, CancellationToken cancellationToken);
     }
 }
