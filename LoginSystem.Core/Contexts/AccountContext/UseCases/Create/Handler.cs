@@ -7,6 +7,7 @@ using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
+using static LoginSystem.Core.Contexts.AccountContext.UseCases.Create.Response;
 
 namespace LoginSystem.Core.Contexts.AccountContext.UseCases.Create
 {
@@ -83,9 +84,17 @@ namespace LoginSystem.Core.Contexts.AccountContext.UseCases.Create
             #endregion
 
             #region 05. Enviar E-mail de ativação
-
+            try
+            {
+                await _service.SendVerificationEmailAsync(user, cancellationToken);
+            }
+            catch (Exception)
+            {
+                //do nothing
+            }
             #endregion
 
+            return new Response("Conta criada", new ResponseData(user.Id, user.Name, user.Email));
         }
     }
 }
