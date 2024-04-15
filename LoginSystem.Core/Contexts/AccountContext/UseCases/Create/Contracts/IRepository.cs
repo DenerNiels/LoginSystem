@@ -8,5 +8,6 @@ namespace LoginSystem.Core.Contexts.AccountContext.UseCases.Create.Contracts
 {
     internal interface IRepository
     {
+        Task<bool> AnyAsync(string email, CancellationToken cancellationToken );
     }
 }

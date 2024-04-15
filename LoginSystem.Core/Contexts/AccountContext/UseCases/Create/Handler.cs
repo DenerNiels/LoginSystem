@@ -4,6 +4,7 @@ using LoginSystem.Core.Contexts.AccountContext.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -55,7 +56,18 @@ namespace LoginSystem.Core.Contexts.AccountContext.UseCases.Create
             }
             #endregion
 
-            #region 03. Verificar o usuário
+            #region 03. Verificar se o usuário existe no banco
+
+            try
+            {
+                var exists = await _repository.AnyAsync(Request.Email, cancellationToken);
+                if (exists)
+                    return new Response("este e-mail já esta em uso", 400);
+            }
+            catch (Exception)
+            {
+                return new Response("Falha ao verificar e-mail cadastrado", 500);
+            }
 
             #endregion
 
