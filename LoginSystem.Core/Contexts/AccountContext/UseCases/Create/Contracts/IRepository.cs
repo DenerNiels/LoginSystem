@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LoginSystem.Core.Contexts.AccountContext.UseCases.Create.Contracts
 {
-    internal interface IRepository
+    public interface IRepository
     {
         Task<bool> AnyAsync(string email, CancellationToken cancellationToken );
         Task SaveAsync(User user, CancellationToken cancellationToken);
