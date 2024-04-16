@@ -28,7 +28,7 @@ namespace LoginSystem.Core.Contexts.AccountContext.UseCases.Create
             data = data;
         }
 
-        public  ResponseData? data { get; set; }
+        public  ResponseData? Data { get; set; }
 
         public record ResponseData(Guid Id, string Name, string Email);
     }

@@ -32,7 +32,7 @@ namespace LoginSystem.Core.Contexts.AccountContext.UseCases.Create
                 if (!res.IsValid)
                     return new Response("Requisição inválida", 400, res.Notifications);
             }
-            catch (Exception e ) //ver aplicando oop na vida real
+            catch (Exception e) //ver aplicando oop na vida real
             {
                 Console.WriteLine(e);
                 throw;
@@ -45,7 +45,7 @@ namespace LoginSystem.Core.Contexts.AccountContext.UseCases.Create
             Email email;
             Password password;
             User user;
-            
+
             try
             {
                 email = new Email(request.Email);
@@ -66,7 +66,7 @@ namespace LoginSystem.Core.Contexts.AccountContext.UseCases.Create
                 if (exists)
                     return new Response("este e-mail já esta em uso", 400);
             }
-            catch (Exception)
+            catch (Exception )
             {
                 return new Response("Falha ao verificar e-mail cadastrado", 500);
             }
