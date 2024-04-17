@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LoginSystem.Core.Contexts.AccountContext.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,6 @@ namespace LoginSystem.Core.Contexts.AccountContext.UseCases.Authenticate.Contrac
 {
     public interface IRepository
     {
+        Task<User?> GetUserByEmailAsync(string email, CancellationToken cancellationToken);
     }
 }
