@@ -10,5 +10,6 @@ namespace LoginSystem.Core.Contexts.AccountContext.UseCases.Authenticate.Contrac
     public interface IRepository
     {
         Task<User?> GetUserByEmailAsync(string email, CancellationToken cancellationToken);
+
     }
 }
