@@ -25,7 +25,7 @@ namespace LoginSystem.Core.Contexts.AccountContext.UseCases.Create
         {
             Message = message;
             Status = 201;
-            data = data;
+            Data = data;
         }
 
         public  ResponseData? Data { get; set; }
