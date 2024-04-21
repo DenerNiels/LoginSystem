@@ -67,6 +67,22 @@ namespace LoginSystem.Infra.Contexts.AccountContext.Mappings
                 .Property(x => x.ResetCode)
                 .HasColumnName("PasswordResetCode")
                 .IsRequired();
+
+            builder.HasMany(x => x.Roles)
+                .WithMany(x => x.Users)
+                .UsingEntity<Dictionary<string, object>>(
+                "UserRole",
+                role => role
+                .HasOne<Role>()
+                .WithMany()
+                .HasForeignKey("RoleId")
+                .OnDelete(DeleteBehavior.Cascade),
+                user => user
+                .HasOne<User>()
+                .WithMany()
+                .HasForeignKey("UserID")
+                .OnDelete(DeleteBehavior.Cascade));
+
         }
     }
 }

@@ -58,7 +58,11 @@ namespace LoginSystem.Core.Contexts.AccountContext.UseCases.Authenticate
             }
             #endregion
 
-            #region 05. Retoma os dados
+            #region 05. Recupera os perfis do usuário
+
+            #endregion
+
+            #region 06. Retoma os dados
             try
             {
                 var data = new ResponseData
