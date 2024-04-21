@@ -60,7 +60,8 @@ namespace LoginSystem.Api.Extensions
                     return Results.Json(result, statusCode: 500);
                 result.Data.Token = LsExtension.Generate(result.Data);
                 return Results.Ok(result);
-            });
+            })
+                .RequireAuthorization();
             #endregion
         }
     }
