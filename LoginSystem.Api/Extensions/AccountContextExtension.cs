@@ -61,7 +61,7 @@ namespace LoginSystem.Api.Extensions
                 result.Data.Token = LsExtension.Generate(result.Data);
                 return Results.Ok(result);
             })
-                .RequireAuthorization();
+                .AllowAnonymous();
             #endregion
         }
     }
